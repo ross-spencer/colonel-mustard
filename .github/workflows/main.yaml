@@ -7,8 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: foo
-        uses: ross-spencer/steeplechase@v1
+        uses: ross-spencer/steeplechase@v3
         with:
           who-to-greet: 'Mona the Octocat'
+          secret-one: ${{ secrets.SECRET_ONE }}
+          secret-two: ${{ secrets.SECRET_TWO }}
+          secret-three: ${{ secrets.SECRET_THREE }}
       - run: echo random-number ${{ steps.foo.outputs.random-number }}
         shell: bash
