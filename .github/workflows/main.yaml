@@ -13,5 +13,12 @@ jobs:
           secret-one: ${{ secrets.SECRET_ONE }}
           secret-two: ${{ secrets.SECRET_TWO }}
           secret-three: ${{ secrets.SECRET_THREE }}
-      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+      - name: Get provisioner
+        run: go get github.com/ross-spencer/knock-knock
+        shell: bash
+      - name: Install provisioner
+        run: go install $HOME/go/src/github.com/ross-spencer/knock-knock/
+        shell: bash
+      - name: Run provisioner
+        run: $HOME/go/bin/knock-knock -life=2h -host=develop-RAND.itforarchivists.com -env=${{ secrets.SECRET_ONE }},${{ secrets.SECRET_TWO }},${{ secrets.SECRET_THREE }} $HOME/provisioner/scripts/develop.yaml
         shell: bash
