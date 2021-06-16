@@ -10,7 +10,7 @@ jobs:
       - name: Set RAND
         id: step_one
         run: |
-          echo "random_number=$RANDOM" >> $GITHUB_ENV
+          echo "random_number=echo $RANDOM" >> $GITHUB_ENV
       - name: Show ref
         run: echo "Git branch ref:" ${{github.ref}}
       - name: Get provisioner
