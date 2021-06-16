@@ -12,7 +12,7 @@ jobs:
       - name: Show ref
         run: echo "Git branch ref:" ${{github.ref}}
       - name: Get provisioner
-        run: go get github.com/ross-spencer/knock-knock@0.0.1
+        run: go get github.com/ross-spencer/knock-knock
         shell: bash
       - if: github.ref == 'refs/heads/develop'
         name: Benchmark development branch
