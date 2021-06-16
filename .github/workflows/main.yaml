@@ -6,19 +6,13 @@ jobs:
     name: Benchmark Siegfried
     steps:
       - uses: actions/checkout@v2
-        id: sf
       - name: Set RAND
-        id: setup
         run: |
           echo "random_number=$RANDOM" >> $GITHUB_ENV
       - name: Show ref
         run: echo "Git branch ref:" ${{github.ref}}
       - name: Get provisioner
-        id: runner
-        run: go get github.com/ross-spencer/knock-knock
-        shell: bash
-      - name: Install provisioner
-        run: go install $HOME/go/src/github.com/ross-spencer/knock-knock/
+        run: go get github.com/ross-spencer/knock-knock@0.0.1
         shell: bash
       - if: github.ref == 'refs/heads/develop'
         name: Benchmark development branch
