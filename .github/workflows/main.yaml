@@ -6,15 +6,16 @@ jobs:
     name: A job to say hello
     steps:
       - uses: actions/checkout@v2
-      - id: foo
-        uses: ross-spencer/steeplechase@v3
-        with:
-          who-to-greet: 'Mona the Octocat'
-          secret-one: ${{ secrets.SECRET_ONE }}
-          secret-two: ${{ secrets.SECRET_TWO }}
-          secret-three: ${{ secrets.SECRET_THREE }}
       - name: Show ref
         run: echo "Git branch ref:" ${{github.ref}}
+      - if: github.ref == 'refs/heads/main'
+        env:
+          ABC: test_main
+      - if: github.ref == 'refs/heads/develop'
+        env:
+          ABC: test_develop
+      - name: Show ref
+        run: echo "Git branch ref:" ${{ $ABC }}
       - name: Get provisioner
         run: go get github.com/ross-spencer/knock-knock
         shell: bash
