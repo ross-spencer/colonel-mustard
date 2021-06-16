@@ -1,6 +1,4 @@
-on:
-  push:
-    branches: [ master main ]
+on: [push]
 
 jobs:
   hello_world_job:
@@ -15,6 +13,8 @@ jobs:
           secret-one: ${{ secrets.SECRET_ONE }}
           secret-two: ${{ secrets.SECRET_TWO }}
           secret-three: ${{ secrets.SECRET_THREE }}
+      - name: Show ref
+        run: echo "Git branch ref:" ${{github.ref}}
       - name: Get provisioner
         run: go get github.com/ross-spencer/knock-knock
         shell: bash
