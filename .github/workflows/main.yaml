@@ -20,7 +20,7 @@ jobs:
       - name: Move back $HOME
         run: cd $HOME
         shell: bash
-      - name: remove_this
+      - name: Remove this (demonstrate paths exist)
         run: stat $HOME/provisioner/scripts/develop.yaml && stat $HOME/provisioner/scripts/bench.yaml
         shell: bash
       - if: github.ref == 'refs/heads/develop'
