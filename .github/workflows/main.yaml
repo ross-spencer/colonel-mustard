@@ -21,7 +21,7 @@ jobs:
         run: cd $HOME
         shell: bash
       - name: remove_this
-        run: stat $HOME/knock-knock/go.mod
+        run: stat $HOME/provisioner/go.mod
         shell: bash
       - if: github.ref == 'refs/heads/develop'
         name: Benchmark development branch
