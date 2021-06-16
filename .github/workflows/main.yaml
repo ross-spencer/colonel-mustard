@@ -11,8 +11,20 @@ jobs:
           echo "random_number=$RANDOM" >> $GITHUB_ENV
       - name: Show ref
         run: echo "Git branch ref:" ${{github.ref}}
-      - name: Get provisioner
-        run: go get github.com/ross-spencer/knock-knock
+      - name: Clone
+        run: go get https://github.com/ross-spencer/knock-knock.git
+        shell: bash
+      - name: Navigate to provisioner
+        run: cd $HOME/knock-knock
+        shell: bash
+      - name: Install provisioner
+        run: go Install
+        shell: bash
+      - name: Move back $HOME
+        run: cd $HOME
+        shell: bash
+      - name: remove_this
+        run: stat $HOME/knock-knock/go.mod
         shell: bash
       - if: github.ref == 'refs/heads/develop'
         name: Benchmark development branch
