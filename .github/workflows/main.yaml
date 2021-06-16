@@ -12,7 +12,7 @@ jobs:
       - name: Show ref
         run: echo "Git branch ref:" ${{github.ref}}
       - name: Clone
-        run: go get https://github.com/ross-spencer/knock-knock.git
+        run: git clone https://github.com/ross-spencer/knock-knock.git
         shell: bash
       - name: Navigate to provisioner
         run: cd $HOME/knock-knock
