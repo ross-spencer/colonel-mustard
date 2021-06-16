@@ -1,23 +1,30 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  benchmark_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Benchmark Siegfried
     steps:
       - uses: actions/checkout@v2
+        id: sf
+      - name: Set RAND
+        id: setup
+        run: |
+          echo "random_number=$RANDOM" >> $GITHUB_ENV
       - name: Show ref
         run: echo "Git branch ref:" ${{github.ref}}
       - name: Get provisioner
+        id: runner
         run: go get github.com/ross-spencer/knock-knock
         shell: bash
       - name: Install provisioner
         run: go install $HOME/go/src/github.com/ross-spencer/knock-knock/
         shell: bash
-      - if: github.ref == 'refs/heads/main'
-        name: Run provisioner
-        run: $HOME/go/bin/knock-knock -life=2h -host=develop-RAND.itforarchivists.com -env=${{ secrets.SECRET_ONE }},${{ secrets.SECRET_TWO }},${{ secrets.SECRET_THREE }} $HOME/provisioner/scripts/develop.yaml
-        shell: bash
       - if: github.ref == 'refs/heads/develop'
-        name: IDK
-        run: echo "RUNNING SOMETHING ELSE!"
+        name: Benchmark development branch
+        run: $HOME/go/bin/knock-knock -life=2h -host=develop-${{ env.random_number }}.itforarchivists.com -env=${{ secrets.SECRET_ONE }},${{ secrets.SECRET_TWO }},${{ secrets.SECRET_THREE }},${{ secrets.SECRET_FOUR }} $HOME/provisioner/scripts/develop.yaml
+        shell: bash
+      - if: github.ref == 'refs/heads/main'
+        name: Benchmark main branch
+        run: $HOME/go/bin/knock-knock -life=12h -max=-1 -host=bench-${{ env.random_number }}.itforarchivists.com -env=${{ secrets.SECRET_ONE }},${{ secrets.SECRET_TWO }},${{ secrets.SECRET_THREE }},${{ secrets.SECRET_FOUR }} $HOME/provisioner/scripts/bench.yaml
+        shell: bash
