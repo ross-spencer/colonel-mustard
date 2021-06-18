@@ -25,8 +25,10 @@ jobs:
         shell: bash
       - if: github.ref == 'refs/heads/develop'
         name: Benchmark development branch
-        run: $HOME/go/bin/knock-knock -life=2h -host=develop-${{ env.random_number }}.itforarchivists.com -env=${{ secrets.SECRET_ONE }},${{ secrets.SECRET_TWO }},${{ secrets.SECRET_THREE }},${{ secrets.SECRET_FOUR }} $HOME/provisioner/scripts/develop.yaml
         shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.ENV_SECRET_ONE }}
+        run: $HOME/go/bin/knock-knock -life=2h -host=develop-${{ env.random_number }}.itforarchivists.com -env=SUPER_SECRET $HOME/provisioner/scripts/develop.yaml
       - if: github.ref == 'refs/heads/main'
         name: Benchmark main branch
         run: $HOME/go/bin/knock-knock -life=12h -max=-1 -host=bench-${{ env.random_number }}.itforarchivists.com -env=${{ secrets.SECRET_ONE }},${{ secrets.SECRET_TWO }},${{ secrets.SECRET_THREE }},${{ secrets.SECRET_FOUR }} $HOME/provisioner/scripts/bench.yaml
